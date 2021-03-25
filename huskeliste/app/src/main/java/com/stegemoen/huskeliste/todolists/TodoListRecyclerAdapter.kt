@@ -8,7 +8,7 @@ import com.stegemoen.huskeliste.todolists.data.TodoList
 
 // legger med funksjon (lambda) med adapteren
 class TodoListRecyclerAdapter(
-        private val todoLists:MutableList<TodoList>,
+        private var todoLists:List<TodoList>,
         private val onListClicked:(TodoList)->Unit)
     : RecyclerView.Adapter<TodoListRecyclerAdapter.ViewHolder>() {
 
@@ -37,8 +37,7 @@ class TodoListRecyclerAdapter(
     }
 
     public fun updateLists(newLists:List<TodoList>){
-        todoLists.clear()
-        todoLists.addAll(newLists)
+        todoLists = newLists
         notifyDataSetChanged()
     }
 }
