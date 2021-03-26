@@ -1,23 +1,61 @@
 package com.stegemoen.huskeliste
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.stegemoen.huskeliste.databinding.ActivityMainBinding
-import com.stegemoen.huskeliste.todolists.TodoItem
-import com.stegemoen.huskeliste.todolists.TodoList
+import com.stegemoen.huskeliste.todolists.TodoListDepositoryManager
+import com.stegemoen.huskeliste.todolists.TodoListDetailsActivity
+import com.stegemoen.huskeliste.todolists.data.TodoItem
+import com.stegemoen.huskeliste.todolists.data.TodoList
+import com.stegemoen.huskeliste.todolists.TodoListRecyclerAdapter
+
+const val EXTRA_TODOLIST_INFO: String = "com.stegemoen.huskeliste.todolists.info"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var todoList:MutableList<TodoList> = mutableListOf(
-        TodoList("Must See Movies", mutableListOf<TodoItem>()),
-        TodoList("Must Play Games", mutableListOf<TodoItem>()),
-        TodoList("Christmas Presents", mutableListOf<TodoItem>()),
-        TodoList("Shopping List", mutableListOf<TodoItem>())
-    )
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.todoListing.layoutManager = LinearLayoutManager(this)
+        // Legger til parameter for onListClicked funksjonen
+        binding.todoListing.adapter = TodoListRecyclerAdapter(emptyList<TodoList>(), this::onListClicked)
+
+        TodoListDepositoryManager.instance.onTodoList = {
+            (binding.todoListing.adapter as TodoListRecyclerAdapter).updateLists(it)
+        }
+
+        TodoListDepositoryManager.instance.load()
+
+        binding.saveBt.setOnClickListener {
+            // Todo: Sjekk om jeg rekker å gjøre denne koden bedre
+            val listName = binding.listName.text.toString()
+
+            binding.listName.setText("")
+
+            // ToDo: call addTodoList(listname, list<TodoItem>) + ipm...
+        }
+    }
+
+    private fun addTodoList(listName:String){
+        val todoList = TodoList(listName)
+        // val todoList = TodoList(listName, mutableListOf<TodoItem>())
+        TodoListDepositoryManager.instance.addTodoList(todoList)
+
+    }
+    private fun onListClicked(todoList: TodoList):Unit{
+        val intent = Intent(this, TodoListDetailsActivity::class.java).apply{
+            putExtra(EXTRA_TODOLIST_INFO, todoList)
+        }
+
+        startActivity(intent)
     }
 }
