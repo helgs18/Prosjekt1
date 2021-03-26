@@ -9,14 +9,16 @@ import com.stegemoen.huskeliste.todolists.data.TodoList
 // legger med funksjon (lambda) med adapteren
 class TodoListRecyclerAdapter(
         private var todoLists:List<TodoList>,
-        private val onListClicked:(TodoList)->Unit)
+        private val onTodoListClicked:(TodoList)->Unit)
     : RecyclerView.Adapter<TodoListRecyclerAdapter.ViewHolder>() {
 
     // Dette er en hjelpeklasse, for å si dette er den type view som vi har lyst til å ha
     class ViewHolder(val binding:TodolistLayoutBinding):RecyclerView.ViewHolder(binding.root) {
-        fun bind(todoList: TodoList) {
+        fun bind(todoList: TodoList,onTodoListClicked:(TodoList) -> Unit) {
             binding.listName.text = todoList.listName
-
+            binding.card.setOnClickListener {
+                onTodoListClicked(todoList)
+            }
         }
     }
 
@@ -24,7 +26,7 @@ class TodoListRecyclerAdapter(
 
     override fun onBindViewHolder(holder:ViewHolder, position:Int) {
         val todoList = todoLists[position]
-        holder.bind(todoList)
+        holder.bind(todoList,onTodoListClicked)
     }
 
     /* Trenger ikke alltid returnere samme ViewHolder. / eller samme type View

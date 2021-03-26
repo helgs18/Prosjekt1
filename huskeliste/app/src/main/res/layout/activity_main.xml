@@ -10,18 +10,19 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addListForm"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintBottom_toTopOf="@+id/addTodoListForm"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/todoListing"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/addListForm"
+        android:id="@+id/addTodoListForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,19 +31,22 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         >
 
+
         <EditText
             android:id="@+id/listName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Navn for listen"/>
-        
+            android:hint="Navn for listen"
+            android:inputType="text" />
+
         <Button
             android:id="@+id/saveBt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save"/>
+            android:text="Save" />
+
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
