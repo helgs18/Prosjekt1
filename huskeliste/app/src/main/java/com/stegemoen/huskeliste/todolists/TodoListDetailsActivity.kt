@@ -24,8 +24,7 @@ class TodoListDetailsActivity: AppCompatActivity() {
         } else {
             finish()
         }
-
         binding.listName.text = todoList.listName
-
+        Log.i("onCreate: listName =", todoList.listName.toString())
     }
 }
