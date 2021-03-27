@@ -36,11 +36,11 @@ class TodoListDepositoryManager {
     fun load(){
 
         todoListCollection = mutableListOf(
-            TodoList("Handleliste"),
-            TodoList("Must See filmer"),
-            TodoList("Julegaver"),
-            TodoList("Fjelltopper å bestige"),
-            TodoList("Bucket List")
+            TodoList("Handleliste", handleliste),
+            TodoList("Must See filmer", mustSeeMovies),
+            TodoList("Julegaver", julegaver),
+            TodoList("Fjelltopper å bestige", fjelltopper),
+            TodoList("Bucket List", bucketlist)
             /*TodoList("Handleliste", handleliste),
             TodoList("Must See filmer", mustSeeMovies),
             TodoList("Julegaver", julegaver),

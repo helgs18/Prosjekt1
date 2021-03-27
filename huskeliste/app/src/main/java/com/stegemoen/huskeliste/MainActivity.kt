@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addTodoList(listName:String){
-        val todoList = TodoList(listName)
+        val todoList = TodoList(listName, mutableListOf<TodoItem>())
         // val todoList = TodoList(listName, mutableListOf<TodoItem>())
         TodoListDepositoryManager.instance.addTodoList(todoList)
 
