@@ -4,6 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TodoItem(val ItemName:String, val checked: Boolean): Parcelable
-
-// Todo: repliker TodoListRecyclerAdapter og todoListLayout.xml for TodoItem
+data class TodoItem(val itemName: String, val checked: Boolean): Parcelable

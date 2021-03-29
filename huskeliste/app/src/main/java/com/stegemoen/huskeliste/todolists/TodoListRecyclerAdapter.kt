@@ -16,7 +16,7 @@ class TodoListRecyclerAdapter(
     class ViewHolder(val binding:TodolistLayoutBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(todoList: TodoList,onTodoListClicked:(TodoList) -> Unit) {
             binding.listName.text = todoList.listName
-            binding.card.setOnClickListener {
+            binding.cardForLists.setOnClickListener {
                 onTodoListClicked(todoList)
             }
         }
@@ -35,7 +35,9 @@ class TodoListRecyclerAdapter(
         Se ca: 1:00:00 i videoen IKT #9 (https://www.youtube.com/watch?v=i9jrx3-iKlo)
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(TodolistLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(TodolistLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false))
     }
 
     public fun updateLists(newLists:List<TodoList>){

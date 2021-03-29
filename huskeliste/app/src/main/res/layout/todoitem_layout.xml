@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
+    android:id="@+id/cardForItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -18,12 +18,19 @@
         android:orientation="vertical"
         >
          <TextView
-            android:id="@+id/itemName"
+            android:id="@+id/listItemsName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:text="Jajajaja"/>
+            android:text="  item"/>
+
+        <TextView
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="c  "/>
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
