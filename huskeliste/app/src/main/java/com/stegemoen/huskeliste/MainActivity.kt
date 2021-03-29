@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.stegemoen.huskeliste.databinding.ActivityMainBinding
 import com.stegemoen.huskeliste.todolists.TodoListDepositoryManager
 import com.stegemoen.huskeliste.todolists.TodoListDetailsActivity
-import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import com.stegemoen.huskeliste.todolists.TodoListRecyclerAdapter
+import com.stegemoen.huskeliste.todolists.data.TodoItem
 
 const val EXTRA_TODOLIST_INFO: String = "com.stegemoen.huskeliste.todolists.info"
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addTodoList(listName:String){
-        val todoList = TodoList(listName)
+        val todoList = TodoList(listName, mutableListOf<TodoItem>())
         // val todoList = TodoList(listName, mutableListOf<TodoItem>())
         TodoListDepositoryManager.instance.addTodoList(todoList)
 
