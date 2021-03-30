@@ -1,39 +1,45 @@
 package com.stegemoen.huskeliste.todolists
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.stegemoen.huskeliste.databinding.TodoitemLayoutBinding
-import com.stegemoen.huskeliste.todolists.data.TodoItem
+import com.stegemoen.huskeliste.R
 
 class TodoItemRecyclerAdapter(
-    private val todoItems: MutableList<TodoItem>,
-    private val onItemClicked:(TodoItem)->Unit)
+    private val todoItems: List<String>) //,
+    //private val onItemClicked:(TodoItem)->Unit)
     : RecyclerView.Adapter<TodoItemRecyclerAdapter.ViewHolder>() {
 
     // Hjelpeklasse
-    class ViewHolder(val binding:TodoitemLayoutBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(todoItem: TodoItem, onItemClicked:(TodoItem) -> Unit) {
+    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+        private val itemViewTextView: TextView = itemView.findViewById(R.id.TodoItem_text)
+
+        fun bind(word: String) { //fun bind(word: String, onItemClicked:(String) -> Unit) {
             //binding.itemName.text = todoItem.ItemName // todoItem.itemName
-            binding.listItemsName.text = todoItem.itemName.toString()
-            binding.checkBox.text = todoItem.checked.toString()
-            binding.cardForItems.setOnClickListener {
-                onItemClicked(todoItem)
-            }
+            itemViewTextView.text = word
+            /*itemViewTextView.setOnClickListener {
+                onItemClicked(String)
+            }*/
         }
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position:Int){
-        val todoItem = todoItems[position]
-        holder.bind(todoItem,onItemClicked)
+    // Returns a new ViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.todoitem_layout, parent, false)
+
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int = todoItems.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(TodoitemLayoutBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent, false))
+    // Display data at a certain position
+    override fun onBindViewHolder(holder: ViewHolder, position: Int){
+        holder.bind(todoItems[position])
     }
+
+    // ToDo: Legg til onClickListener() funksjonalitet for checkboxes
 }
