@@ -3,23 +3,26 @@ package com.stegemoen.huskeliste.todolists
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.stegemoen.huskeliste.R
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 
-class TodoItemRecyclerAdapter(
-    private val todoItems: MutableList<TodoItem>) //,
-    //private val onItemClicked:(TodoItem)->Unit)
-    : RecyclerView.Adapter<TodoItemRecyclerAdapter.ViewHolder>() {
+class newRecyclerAdapter(
+        private val todoItems: MutableList<TodoItem>) //,
+        //private val onItemClicked:(TodoItem)->Unit)
+        : RecyclerView.Adapter<newRecyclerAdapter.ViewHolder>() {
 
     // Hjelpeklasse
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val itemViewTextView: TextView = itemView.findViewById(R.id.TodoItem_text)
+        private val itemViewCheckbox: CheckBox = itemView.findViewById(R.id.checkbox)
 
-        fun bind(word: String) { //fun bind(word: String, onItemClicked:(String) -> Unit) {
+        fun bind(word: String, isChecked: Boolean) { //fun bind(word: String, onItemClicked:(String) -> Unit) {
             //binding.itemName.text = todoItem.ItemName // todoItem.itemName
             itemViewTextView.text = word
+            itemViewCheckbox.isChecked = isChecked
             /*itemViewTextView.setOnClickListener {
                 onItemClicked(String)
             }*/
@@ -39,8 +42,7 @@ class TodoItemRecyclerAdapter(
 
     // Display data at a certain position
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
-        // ToDo: remove commment for bind, if this adapter is going to be used
-        //holder.bind(todoItems[position])
+        holder.bind(todoItems[position].itemName, todoItems[position].checked)
     }
 
     // ToDo: Legg til onClickListener() funksjonalitet for checkboxes
