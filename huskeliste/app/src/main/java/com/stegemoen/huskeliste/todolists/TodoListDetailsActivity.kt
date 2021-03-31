@@ -45,4 +45,5 @@ class TodoListDetailsActivity: AppCompatActivity(){
         startActivity(intent)*/
         // ToDo: Gjør noe med onItemClicked(), som enten endrer på visningen eller checked variablen (se TodoItemRecyclerAdapter)
     }*/
+    // ToDo: Legge til knapp for nye huskelister, fiske layout og bruke Firebase backend.
 }
