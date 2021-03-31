@@ -1,7 +1,6 @@
 package com.stegemoen.huskeliste.todolists
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.stegemoen.huskeliste.EXTRA_TODOLIST_INFO
@@ -35,7 +34,7 @@ class TodoListDetailsActivity: AppCompatActivity(){
         // fra RecyclerViewSimple/ (https://github.com/android/views-widgets-samples/tree/main/RecyclerViewSimple)
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         //recyclerView.adapter = TodoItemRecyclerAdapter(listitems)
-        recyclerView.adapter = newRecyclerAdapter(receivedTodoList.listItems)
+        recyclerView.adapter = TodoItemRecyclerAdapter(receivedTodoList.listItems)
     }
 
     /*
@@ -47,4 +46,6 @@ class TodoListDetailsActivity: AppCompatActivity(){
         // ToDo: Gjør noe med onItemClicked(), som enten endrer på visningen eller checked variablen (se TodoItemRecyclerAdapter)
     }*/
     // ToDo: Legge til knapp for nye huskelister, fiske layout og bruke Firebase backend.
+
+    // ToDo: Funksjon for å slette lister
 }
