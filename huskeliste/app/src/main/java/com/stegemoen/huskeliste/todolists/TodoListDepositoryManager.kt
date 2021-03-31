@@ -1,5 +1,6 @@
 package com.stegemoen.huskeliste.todolists
 
+import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 
 class TodoListDepositoryManager {
@@ -7,23 +8,36 @@ class TodoListDepositoryManager {
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
 
-    private var handleliste: MutableList<String> = mutableListOf(
-            "Egg", "Melk", "3 x Farris", "Avacado"
+    private var handleliste: MutableList<TodoItem> = mutableListOf(
+            TodoItem("Egg", false),
+            TodoItem("Melk", false),
+            TodoItem("3 x Farris", false),
+            TodoItem("Avacado", false)
     )
 
-    private var julegaver: MutableList<String> = mutableListOf(
-            "Nintendo Switch", "Super Mario Odyssey", "Acer Nitro", "The Matrix DVD"
+    private var julegaver: MutableList<TodoItem> = mutableListOf(
+            TodoItem("Nintendo Switch", false),
+            TodoItem("Super Mario Odyssey", false),
+            TodoItem("Acer Nitro", false),
+            TodoItem("The Matrix DVD", false)
     )
 
-    private var mustSeeMovies: MutableList<String> = mutableListOf(
-            "Forrest Gump", "Aliens", "Terminator 2: Judgement Day", "Pulp Fiction", "Godfellas"
+    private var mustSeeMovies: MutableList<TodoItem> = mutableListOf(
+            TodoItem("Forrest Gump", false),
+            TodoItem("Aliens", false),
+            TodoItem("Terminator 2: Judgement Day", true),
+            TodoItem("Pulp Fiction", false),
+            TodoItem("Godfellas", false)
     )
 
-    private var fjelltopper: MutableList<String> = mutableListOf(
-            "Himmelbjerget", "Mount Everest", "Olympus Mons", "Jotunheimen"
+    private var fjelltopper: MutableList<TodoItem> = mutableListOf(
+            TodoItem("Himmelbjerget", false),
+            TodoItem("Mount Everest", false),
+            TodoItem("Olympus Mons", false),
+            TodoItem("Jotunheimen", false)
     )
 
-    private var bucketlist: MutableList<String> = mutableListOf()
+    private var bucketlist: MutableList<TodoItem> = mutableListOf()
 
     fun load(){
 
