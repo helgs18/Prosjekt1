@@ -22,18 +22,14 @@ class TodoListDetailsActivity: AppCompatActivity(){
 
         val receivedTodoList = intent.getParcelableExtra<TodoList>(EXTRA_TODOLIST_INFO)
 
-        // For recyclerView.adapter
-        var listitems: MutableList<String>
-        listitems = receivedTodoList?.listItems as MutableList<String>
-
-        todoList = receivedTodoList // Fjernet if-statement pga. always true
+        // Måtte gjøre receviedTodoList (type = TodoList?) til TodoList
+        todoList = receivedTodoList as TodoList // Fjernet if-statement pga. always true
 
         binding.listName.text = todoList.listName + ":"
 
         // Adapter kode er tatt fra FlowerAdapter og RecyclerView koden under er basert på koden
         // fra RecyclerViewSimple/ (https://github.com/android/views-widgets-samples/tree/main/RecyclerViewSimple)
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        //recyclerView.adapter = TodoItemRecyclerAdapter(listitems)
         recyclerView.adapter = TodoItemRecyclerAdapter(receivedTodoList.listItems)
     }
 
