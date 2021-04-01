@@ -46,6 +46,11 @@ class TodoItemRecyclerAdapter(
     }
 
     // ToDo: Legg til onClickListener() funksjonalitet for checkboxes
+    // for(i = 0; i < getListCount(); i++) e.l.
 
-    // ToDo: Funksjon for sletting av elementer
+    // Slette et item. Bruk knapp, og eventuelt legg til papirkurv bilde senere.
+    fun deleteItem(): Void?{
+        // ToDo: for(i = 0; i < getItemCount(); i++) e.l.
+        return null
+    }
 }

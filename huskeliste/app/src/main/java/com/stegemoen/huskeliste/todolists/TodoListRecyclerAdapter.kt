@@ -44,4 +44,12 @@ class TodoListRecyclerAdapter(
         todoLists = newLists
         notifyDataSetChanged()
     }
+
+    // Slette en liste. Bruk knapp, og eventuelt legg til papirkurv bilde senere.
+    // Basic funksjon. Kan legge til bekreftelse senere, om det blir nok tid.
+    // Kan en funskjon liknende updateLists(...) brukes?
+    fun deleteList(): Void?{
+        // ToDo:
+        return null
+    }
 }
