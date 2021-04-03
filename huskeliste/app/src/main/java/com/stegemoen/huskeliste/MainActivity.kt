@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         TodoListDepositoryManager.instance.load()
 
-        binding.saveBt.setOnClickListener {
+        binding.saveListBtn.setOnClickListener {
             // Todo: Sjekk om jeg rekker å gjøre denne koden bedre
             val listName = binding.listName.text.toString()
 
