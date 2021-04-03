@@ -61,6 +61,10 @@ class TodoListDepositoryManager {
         onTodoList?.invoke(todoListCollection)
     }
 
+    fun addTodoItem(todoList: TodoList, todoItem:TodoItem){
+        todoList.listItems.add(todoItem)
+    }
+
     // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
     companion object {
         val instance = TodoListDepositoryManager()

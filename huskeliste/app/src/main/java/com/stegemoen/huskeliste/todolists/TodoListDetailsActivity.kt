@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stegemoen.huskeliste.EXTRA_TODOLIST_INFO
 import com.stegemoen.huskeliste.R
 import com.stegemoen.huskeliste.databinding.ActivityTodoListDetailsBinding
+import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 
 class TodoListDetailsActivity: AppCompatActivity(){
@@ -33,6 +34,20 @@ class TodoListDetailsActivity: AppCompatActivity(){
         // fra RecyclerViewSimple/ (https://github.com/android/views-widgets-samples/tree/main/RecyclerViewSimple)
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = TodoItemRecyclerAdapter(receivedTodoList.listItems)
+
+        binding.saveItemBtn.setOnClickListener {
+            val itemName = binding.createItemName.text.toString()
+
+            binding.createItemName.setText("")
+            addTodoItem(itemName)
+        }
+    }
+
+    private fun addTodoItem(itemName: String) { // Må denne ha parameter for liste?
+        val todoItem = TodoItem(itemName, false)
+        TodoListDepositoryManager.instance.addTodoItem(todoList, todoItem)
+        finish()
+        startActivity(intent)
     }
 
     /*
@@ -53,4 +68,6 @@ class TodoListDetailsActivity: AppCompatActivity(){
         // ToDo: Add select for checkboxes (how?)
         return null
     }
+
+
 }
