@@ -2,11 +2,13 @@ package com.stegemoen.huskeliste.todolists
 
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
+import com.stegemoen.huskeliste.todolists.TodoItemRecyclerAdapter
 
 class TodoListDepositoryManager {
     private lateinit var todoListCollection:MutableList<TodoList>
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
+    var onTodoItem:((List<TodoItem>)->Unit)? = null
 
     private var handleliste: MutableList<TodoItem> = mutableListOf(
             TodoItem("Egg", false),
@@ -59,6 +61,12 @@ class TodoListDepositoryManager {
     fun deleteTodoList(todoList:TodoList){
         todoListCollection.remove(todoList)
         onTodoList?.invoke(todoListCollection)
+    }
+
+    fun deleteTodoItem(todoList: MutableList<TodoItem>, todoItem:TodoItem) {
+        if(todoList.contains(todoItem)){
+            todoList.remove(todoItem)
+        }
     }
 
     fun addTodoList(todoList:TodoList){
