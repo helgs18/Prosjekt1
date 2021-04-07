@@ -24,6 +24,11 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:text="TextView" />
 
+        <Button
+            android:id="@+id/deleteListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

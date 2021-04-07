@@ -16,9 +16,16 @@ class TodoListRecyclerAdapter(
     class ViewHolder(val binding:TodolistLayoutBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(todoList: TodoList,onTodoListClicked:(TodoList) -> Unit) {
             binding.listName.text = todoList.listName
+            binding.deleteListBtn.setOnClickListener {
+                onDeleteListBtnClicked(todoList)
+            }
             binding.cardForLists.setOnClickListener {
                 onTodoListClicked(todoList)
             }
+        }
+
+        private fun onDeleteListBtnClicked(todoList: TodoList) {
+            TodoListDepositoryManager.instance.deleteTodoList(todoList)
         }
     }
 
