@@ -56,6 +56,11 @@ class TodoListDepositoryManager {
         onTodoListUpdate?.invoke(todoList)
     }
 
+    fun deleteTodoList(todoList:TodoList){
+        todoListCollection.remove(todoList)
+        onTodoList?.invoke(todoListCollection)
+    }
+
     fun addTodoList(todoList:TodoList){
         todoListCollection.add(todoList)
         onTodoList?.invoke(todoListCollection)
