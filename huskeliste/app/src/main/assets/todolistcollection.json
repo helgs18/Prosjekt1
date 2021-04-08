@@ -1,0 +1,102 @@
+{
+  "todolistCollection":[
+    {
+      "ListName": "Handleliste",
+      "ListItems": [
+        {
+          "ItemName": "Egg",
+          "checked": true
+        },
+        {
+          "ItemName": "Melk",
+          "checked": false
+        },
+        {
+          "ItemName": "3 x Farris",
+          "checked": false
+        },
+        {
+          "ItemName": "Avacado",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "ListName": "Julegaver",
+      "ListItems": [
+        {
+          "ItemName": "Nintendo Switch",
+          "checked": false
+        },
+        {
+          "ItemName": "Super Mario Odyssey",
+          "checked": false
+        },
+        {
+          "ItemName": "Acer Nitro",
+          "checked": false
+        },
+        {
+          "ItemName": "The Matrix DVD",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "ListName": "Must see filmer",
+      "ListItems": [
+        {
+          "ItemName": "Julegave2",
+          "checked": false
+        },
+        {
+          "ItemName": "Forrest Gump",
+          "checked": false
+        },
+        {
+          "ItemName": "Aliens",
+          "checked": false
+        },
+        {
+          "ItemName": "Terminator 2: Judgement Day",
+          "checked": false
+        },
+        {
+          "ItemName": "Pulp Fiction",
+          "checked": false
+        },
+        {
+          "ItemName": "Godfellas",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "ListName": "Fjelltopper",
+      "ListItems": [
+        {
+          "ItemName": "Himmelbjerget",
+          "checked": false
+        },
+        {
+          "ItemName": "Mount Everest",
+          "checked": false
+        },
+        {
+          "ItemName": "Olympus Mons",
+          "checked": false
+        },
+        {
+          "ItemName": "Jotunheimen",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "ListName": "Bucketlist",
+      "ListItems": [
+
+      ]
+    }
+  ]
+}
