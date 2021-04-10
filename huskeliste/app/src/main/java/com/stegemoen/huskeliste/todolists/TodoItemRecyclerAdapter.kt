@@ -1,8 +1,10 @@
 package com.stegemoen.huskeliste.todolists
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.stegemoen.huskeliste.MainActivity
 import com.stegemoen.huskeliste.databinding.TodoitemLayoutBinding
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 

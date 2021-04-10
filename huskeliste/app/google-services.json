@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "559607335075",
+    "project_id": "huskeliste-d2d4e",
+    "storage_bucket": "huskeliste-d2d4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559607335075:android:4413f1b72c543298e75716",
+        "android_client_info": {
+          "package_name": "com.stegemoen.huskeliste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559607335075-iqcskg9itr4ptlh0ba68ngcmpdufm2op.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stegemoen.huskeliste",
+            "certificate_hash": "aeffe69418bff700cb07bc72e205f51d0f4f8723"
+          }
+        },
+        {
+          "client_id": "559607335075-90o1pc1fgjfpdqr738sb3c9bvn07g6vu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7-u_-kliSb58BklwM6Ew87DgtJNILpPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559607335075-90o1pc1fgjfpdqr738sb3c9bvn07g6vu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

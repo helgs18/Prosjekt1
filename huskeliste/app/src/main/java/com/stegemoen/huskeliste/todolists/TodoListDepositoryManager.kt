@@ -3,6 +3,8 @@ package com.stegemoen.huskeliste.todolists
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import com.stegemoen.huskeliste.todolists.TodoItemRecyclerAdapter
+import com.stegemoen.huskeliste.firebase.SaveJson
+
 
 class TodoListDepositoryManager {
     private lateinit var todoListCollection:MutableList<TodoList>
@@ -61,6 +63,7 @@ class TodoListDepositoryManager {
     fun deleteTodoList(todoList:TodoList){
         todoListCollection.remove(todoList)
         onTodoList?.invoke(todoListCollection)
+        SaveJson.instance.saveToFile(todoListCollection)
     }
 
     fun deleteTodoItem(todoList: MutableList<TodoItem>, todoItem:TodoItem) {

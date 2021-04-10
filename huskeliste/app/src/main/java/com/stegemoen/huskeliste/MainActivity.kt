@@ -1,12 +1,14 @@
 package com.stegemoen.huskeliste
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.stegemoen.huskeliste.databinding.ActivityMainBinding
+import com.stegemoen.huskeliste.firebase.SaveJson
 import com.stegemoen.huskeliste.todolists.TodoListDepositoryManager
 import com.stegemoen.huskeliste.todolists.TodoListDetailsActivity
 import com.stegemoen.huskeliste.todolists.data.TodoList
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        SaveJson.Companion.init(this)
 
         binding.todoListing.layoutManager = LinearLayoutManager(this)
         // Legger til parameter for onListClicked funksjonen
