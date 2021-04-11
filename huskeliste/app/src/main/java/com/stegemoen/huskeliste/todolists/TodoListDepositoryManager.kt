@@ -10,6 +10,7 @@ import com.stegemoen.huskeliste.firebase.SaveJson
 
 
 class TodoListDepositoryManager {
+    // ToDo: Sjekk hvorfor oppretting av lister og items ikke vises i json-fil
     private val TAG:String = "Huskeliste.TodoListDepositoryManager"
     private lateinit var todoListCollection:MutableList<TodoList>
     var onTodoList:((List<TodoList>)->Unit)? = null
@@ -102,16 +103,4 @@ class TodoListDepositoryManager {
     companion object {
         val instance = TodoListDepositoryManager()
     }
-    /*
-    private fun upload(file: Uri) {
-        // Need to create a reference before uploading to storage
-        val ref = FirebaseStorage.getInstance().reference.child(
-            "melodies/${file.lastPathSegment}")
-        var uploadTask = ref.putFile(file)
-        uploadTask.addOnSuccessListener {
-            Log.d(TAG, "Saved file to fb ${it.toString()}")
-        }.addOnFailureListener {
-            Log.e(TAG, "Error saving file to fb", it)
-        }
-    }*/
 }

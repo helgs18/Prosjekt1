@@ -10,6 +10,9 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.stegemoen.huskeliste.databinding.ActivityMainBinding
 import com.stegemoen.huskeliste.firebase.SaveJson
@@ -26,11 +29,15 @@ const val EXTRA_TODOLIST_INFO: String = "com.stegemoen.huskeliste.todolists.info
 class MainActivity : AppCompatActivity() {
     private val TAG:String = "Huskeliste.MainActivity"
     private lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
+    var onSave:((file: Uri) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = Firebase.auth
+        signInAnonymously()
         SaveJson.Companion.init(this)
 
         binding.todoListing.layoutManager = LinearLayoutManager(this)
@@ -77,13 +84,21 @@ class MainActivity : AppCompatActivity() {
     private fun upload(file: Uri) {
         // Need to create a reference before uploading to storage
         val ref = FirebaseStorage.getInstance().reference.child(
-            "melodies/${file.lastPathSegment}")
+            "lister/${file.lastPathSegment}")
         var uploadTask = ref.putFile(file)
 
         uploadTask.addOnSuccessListener {
             Log.d(TAG, "Saved file to fb ${it.toString()}")
         }.addOnFailureListener {
             Log.e(TAG, "Error saving file to fb", it)
+        }
+    }
+
+    private fun signInAnonymously(){
+        auth.signInAnonymously().addOnSuccessListener {
+            Log.d(TAG, "Login success: ${it.user.toString()}")
+        }.addOnFailureListener{
+            Log.e(TAG, "Login failed", )
         }
     }
 
