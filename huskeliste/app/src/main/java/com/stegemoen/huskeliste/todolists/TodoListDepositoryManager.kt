@@ -1,5 +1,8 @@
 package com.stegemoen.huskeliste.todolists
 
+import android.net.Uri
+import android.util.Log
+import com.google.firebase.storage.FirebaseStorage
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import com.stegemoen.huskeliste.todolists.TodoItemRecyclerAdapter
@@ -7,6 +10,7 @@ import com.stegemoen.huskeliste.firebase.SaveJson
 
 
 class TodoListDepositoryManager {
+    private val TAG:String = "Huskeliste.TodoListDepositoryManager"
     private lateinit var todoListCollection:MutableList<TodoList>
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
@@ -53,11 +57,13 @@ class TodoListDepositoryManager {
             TodoList("Bucket List", bucketlist)
         )
         onTodoList?.invoke(todoListCollection)
+        SaveJson.instance.saveToFile(todoListCollection)
     }
 
     fun updateTodoList(todoList:TodoList){
         // finn huskeliste i listen og erstatt med den ny listen
         onTodoListUpdate?.invoke(todoList)
+        SaveJson.instance.saveToFile(todoListCollection)
     }
 
     fun deleteTodoList(todoList:TodoList){
@@ -68,21 +74,44 @@ class TodoListDepositoryManager {
 
     fun deleteTodoItem(todoList: MutableList<TodoItem>, todoItem:TodoItem) {
         if(todoList.contains(todoItem)){
+            var index = 0
+            todoListCollection.forEach {
+                if(it.listItems.contains(todoItem)){
+                    todoList.remove(todoItem)
+                    todoListCollection[index].listItems.remove(todoItem)
+                }
+                index++
+            }
             todoList.remove(todoItem)
+            SaveJson.instance.saveToFile(todoListCollection)
         }
     }
 
     fun addTodoList(todoList:TodoList){
         todoListCollection.add(todoList)
         onTodoList?.invoke(todoListCollection)
+        SaveJson.instance.saveToFile(todoListCollection)
     }
 
     fun addTodoItem(todoList: TodoList, todoItem:TodoItem){
         todoList.listItems.add(todoItem)
+        SaveJson.instance.saveToFile(todoListCollection)
     }
 
     // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
     companion object {
         val instance = TodoListDepositoryManager()
     }
+    /*
+    private fun upload(file: Uri) {
+        // Need to create a reference before uploading to storage
+        val ref = FirebaseStorage.getInstance().reference.child(
+            "melodies/${file.lastPathSegment}")
+        var uploadTask = ref.putFile(file)
+        uploadTask.addOnSuccessListener {
+            Log.d(TAG, "Saved file to fb ${it.toString()}")
+        }.addOnFailureListener {
+            Log.e(TAG, "Error saving file to fb", it)
+        }
+    }*/
 }

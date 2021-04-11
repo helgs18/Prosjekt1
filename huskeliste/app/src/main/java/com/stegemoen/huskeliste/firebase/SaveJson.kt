@@ -23,21 +23,17 @@ class SaveJson {
         var fileName = "huskeliste.json"
         val path = context.getExternalFilesDir(null)
 
-        // ToDo: initialize context
-        //val context: Context
-        //val path = context.getExternalFilesDir(null)
-        val ingenting = context.getExternalFilesDir(null)
-
-
         if(path != null) {
             val file = File(path,fileName)
-            FileOutputStream(file, true).bufferedWriter().use { writer ->
+            FileOutputStream(file, false).bufferedWriter().use { writer ->
                 listCollection.forEach {
                     writer.write("${it}\n")
                 }
                 writer.close()
             }
+            //MainActivity.instance.onSave(file)
             this.onSave?.invoke(file.toUri())
+            //this.onSave?.invoke(file.toUri())
         } else {
             Log.e(TAG, "Could not get external path")
         }

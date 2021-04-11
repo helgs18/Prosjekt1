@@ -43,8 +43,8 @@ internal class TodoItemRecyclerAdapter(
     }
 
     fun updateItems(todoItem: TodoItem){
-        //TodoListDepositoryManager.instance.deleteTodoItem(todoItems, todoItem)
-        todoItems.remove(todoItem)
+        TodoListDepositoryManager.instance.deleteTodoItem(todoItems, todoItem)
+        //todoItems.remove(todoItem)
         notifyDataSetChanged()
     }
 
