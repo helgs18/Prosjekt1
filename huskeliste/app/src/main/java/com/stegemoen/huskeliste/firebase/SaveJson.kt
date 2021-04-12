@@ -16,20 +16,18 @@ import java.io.FileOutputStream
 
 class SaveJson {
     private val TAG:String = "Huskeliste.SaveJson"
-    //var onSave:((file: Uri) -> Unit)? = null
 
     // Can add path as parameter, but not without changing the unit test saveFileTest()
     fun saveToFile(listCollection: MutableList<TodoList>){//(notes: mutableListOf<note>()){
         var fileName = "huskeliste.json"
 
         val path = context.getExternalFilesDir(null)
+        val jsonString = TodoListDepositoryManager.instance.getJson()
 
         val any = if (path != null) {
             val file = File(path, fileName)
             FileOutputStream(file, false).bufferedWriter().use { writer ->
-                listCollection.forEach {
-                    writer.write("${it}\n")
-                }
+                writer.write(jsonString)
                 writer.close()
             }
             MainActivity.instance.onSave(file)
