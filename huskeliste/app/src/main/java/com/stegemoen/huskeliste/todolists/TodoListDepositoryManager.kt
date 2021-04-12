@@ -15,7 +15,6 @@ class TodoListDepositoryManager {
     private lateinit var todoListCollection:MutableList<TodoList>
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
-    var onTodoItem:((List<TodoItem>)->Unit)? = null
 
     private var handleliste: MutableList<TodoItem> = mutableListOf(
             TodoItem("Egg", false),
@@ -102,5 +101,34 @@ class TodoListDepositoryManager {
     // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
     companion object {
         val instance = TodoListDepositoryManager()
+    }
+
+    fun getJson():String {
+        var jsonString: String = "{\n\t\"todoListCollection\":[\n"
+        todoListCollection.forEach{
+            jsonString += "\t\t{\n"
+            jsonString += "\t\t\t\"listName\":\"${it.listName}\",\n"
+            jsonString += "\t\t\t\t\"ListItems\":[\n"
+            "\t\t\t\t\t,\n\"listItems\":[\n\t\t\t\t\t\t{"
+            if(it.listItems.isEmpty()) {
+                jsonString += " ,\n"
+
+            } else {
+                it.listItems.forEach{
+                    jsonString += "\t\t\t\t{\n"
+                    jsonString += "\t\t\t\t\t\"itemName\": \"${it.itemName}\",\n" + // add itemName
+                    "\t\t\t\t\t\"checked\": ${it.checked.toString()}\n\t\t\t\t},\n"        // add checkbox value
+                }
+            }
+
+            jsonString = jsonString.dropLast(2)   // removes comma
+            jsonString += "\n\t\t\t]"         // ends listItems
+            jsonString += "\n\t\t},\n"        // ends current list
+        }
+        jsonString = jsonString.dropLast(2)      // removes comma
+        jsonString += "\n\t]"             // ends todoLists
+        jsonString += "\n}"             // ends todoListCollection
+
+        return jsonString
     }
 }

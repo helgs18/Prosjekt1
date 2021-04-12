@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG:String = "Huskeliste.MainActivity"
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
-    var onSave:((file: Uri) -> Unit)? = null
+    //var onSave:((file: Uri) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun addTodoList(listName:String){
         val todoList = TodoList(listName, mutableListOf<TodoItem>())
-        // val todoList = TodoList(listName, mutableListOf<TodoItem>())
         TodoListDepositoryManager.instance.addTodoList(todoList)
 
     }
