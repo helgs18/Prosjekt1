@@ -90,10 +90,16 @@ class TodoListDepositoryManager {
     fun addTodoList(todoList:TodoList){
         todoListCollection.add(todoList)
         onTodoList?.invoke(todoListCollection)
+        this.todoListCollection = todoListCollection
         SaveJson.instance.saveToFile(todoListCollection)
     }
 
     fun addTodoItem(todoList: TodoList, todoItem:TodoItem){
+        todoListCollection.forEach {
+            if(it == todoList){
+                it.listItems.add(todoItem)
+            }
+        }
         todoList.listItems.add(todoItem)
         SaveJson.instance.saveToFile(todoListCollection)
     }
