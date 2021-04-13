@@ -33,7 +33,7 @@ class TodoListDetailsActivity: AppCompatActivity(){
         // Adapter kode er tatt fra FlowerAdapter og RecyclerView koden under er basert på koden
         // fra RecyclerViewSimple/ (https://github.com/android/views-widgets-samples/tree/main/RecyclerViewSimple)
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        recyclerView.adapter = TodoItemRecyclerAdapter(receivedTodoList.listItems)
+        recyclerView.adapter = TodoItemRecyclerAdapter(receivedTodoList.listItems, receivedTodoList.listName)
 
         binding.saveItemBtn.setOnClickListener {
             val itemName = binding.createItemName.text.toString()

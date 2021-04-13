@@ -2,6 +2,7 @@ package com.stegemoen.huskeliste.todolists
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.text.isDigitsOnly
 import com.google.firebase.storage.FirebaseStorage
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
@@ -88,6 +89,12 @@ class TodoListDepositoryManager {
     }
 
     fun addTodoList(todoList:TodoList){
+        todoListCollection.forEach {
+            if(it.listName == todoList.listName){
+                todoList.listName = todoList.listName + " "
+                Log.i("TodoListDepositoryManager", "adding name at end of duplicate name")
+            }
+        }
         todoListCollection.add(todoList)
         onTodoList?.invoke(todoListCollection)
         this.todoListCollection = todoListCollection
@@ -101,6 +108,22 @@ class TodoListDepositoryManager {
             }
         }
         todoList.listItems.add(todoItem)
+        onTodoList?.invoke(todoListCollection)
+        SaveJson.instance.saveToFile(todoListCollection)
+    }
+
+    fun updateTodoItem(todoListName: String, todoItem: TodoItem, value: Boolean){
+        todoListCollection.forEach {
+            if(it.listName == todoListName){    // Don't want to make changes in the wrong list!
+                it.listItems.forEach{
+                    if(it.itemName == todoItem.itemName){
+                        it.checked = value
+                    }
+                }
+            }
+
+        }
+        onTodoList?.invoke(todoListCollection)
         SaveJson.instance.saveToFile(todoListCollection)
     }
 
