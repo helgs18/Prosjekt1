@@ -3,17 +3,26 @@ package com.stegemoen.huskeliste.todolists
 import android.net.Uri
 import android.util.Log
 import androidx.core.text.isDigitsOnly
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.android.volley.Request
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.stegemoen.huskeliste.App
+import com.stegemoen.huskeliste.R
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import com.stegemoen.huskeliste.todolists.TodoItemRecyclerAdapter
 import com.stegemoen.huskeliste.firebase.SaveJson
+import com.stegemoen.huskeliste.todolists.data.TodoListCollection
 
 
 class TodoListDepositoryManager {
     // ToDo: Sjekk hvorfor oppretting av lister og items ikke vises i json-fil
     private val TAG:String = "Huskeliste.TodoListDepositoryManager"
     private lateinit var todoListCollection:MutableList<TodoList>
+    private lateinit var todoListCollection2:MutableList<TodoList>
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
 
@@ -59,6 +68,7 @@ class TodoListDepositoryManager {
         )
         onTodoList?.invoke(todoListCollection)
         SaveJson.instance.saveToFile(todoListCollection)
+        loadJson()
     }
 
     fun updateTodoList(todoList:TodoList){
@@ -159,5 +169,27 @@ class TodoListDepositoryManager {
         jsonString += "\n}"             // ends todoListCollection
 
         return jsonString
+    }
+
+    fun loadJson() {
+        val context = App.context
+
+        if(context != null){
+
+            //var url = "https://firebasestorage.googleapis.com/v0/b/huskeliste-d2d4e.appspot.com/o/lister%2Fhuskeliste.json?alt=media&token=eb213c05-f310-42e0-a8d4-dea5c816482d"
+            val url = context.getString(R.string.book_listing_url)
+            val queue = Volley.newRequestQueue(context)
+
+            val request = StringRequest(Request.Method.GET, url, {
+                val gson = Gson()
+                val typeDef = object: TypeToken<List<TodoList>>() { }.type
+                val listsFromWeb = gson.fromJson<TodoList>(it, typeDef)
+                todoListCollection2 = mutableListOf<TodoList>(listsFromWeb) // sjekk mer i my books
+            },  {
+                Log.e("BookDepositoryManager", it.toString())
+                onTodoList?.invoke(todoListCollection2) // todoList or todoLists, men hvordan?
+            })
+            queue.add(request)
+        }
     }
 }
