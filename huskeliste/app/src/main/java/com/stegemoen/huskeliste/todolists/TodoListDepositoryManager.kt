@@ -189,6 +189,11 @@ class TodoListDepositoryManager {
         }
     }
 
+    // useful for testing
+    fun getTodoListCollection():MutableList<TodoList>{
+        return todoListCollection
+    }
+
     // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
     companion object {
         val instance = TodoListDepositoryManager()
