@@ -1,20 +1,16 @@
 package com.stegemoen.huskeliste.firebase
 
-import android.app.Application
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
-import android.os.Environment
 import android.util.Log
-import androidx.core.net.toUri
 import com.stegemoen.huskeliste.MainActivity
 import com.stegemoen.huskeliste.todolists.TodoListDepositoryManager
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class SaveJson {
+class FirebaseManager {
     private val TAG:String = "Huskeliste.SaveJson"
 
     // Can add path as parameter, but not without changing the unit test saveFileTest()
@@ -35,12 +31,21 @@ class SaveJson {
         } else {
             Log.e(TAG, "Could not get external path")
         }
+
+    }
+
+    fun loadFile() {
+        var fileName = "handleliste.sjon"
+        val path = context.getExternalFilesDir(null)
+        val inFile = File(path, fileName)
+        FileInputStream(inFile).bufferedReader()
+        val noen = inFile
     }
 
     companion object {
         lateinit var sharedPreferences: SharedPreferences
         lateinit var context: Context
-        val instance = SaveJson()
+        val instance = FirebaseManager()
 
         fun init(con: Context) {
             // to prevent multiple initialization

@@ -1,21 +1,27 @@
 package com.stegemoen.huskeliste.todolists
 
-import android.net.Uri
+import android.content.Context
 import android.util.Log
-import androidx.core.text.isDigitsOnly
-import com.google.firebase.storage.FirebaseStorage
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.stegemoen.huskeliste.R
 import com.stegemoen.huskeliste.todolists.data.TodoItem
 import com.stegemoen.huskeliste.todolists.data.TodoList
-import com.stegemoen.huskeliste.todolists.TodoItemRecyclerAdapter
-import com.stegemoen.huskeliste.firebase.SaveJson
+import com.stegemoen.huskeliste.firebase.FirebaseManager
+import com.stegemoen.huskeliste.App
+import com.stegemoen.huskeliste.todolists.data.TodoItemCollection
 
 
 class TodoListDepositoryManager {
     // ToDo: Sjekk hvorfor oppretting av lister og items ikke vises i json-fil
     private val TAG:String = "Huskeliste.TodoListDepositoryManager"
     private lateinit var todoListCollection:MutableList<TodoList>
+    private lateinit var todoItemCollection:TodoItemCollection
     var onTodoList:((List<TodoList>)->Unit)? = null
     var onTodoListUpdate:((todoList:TodoList)->Unit)? = null
+    var onTodoItems: ((TodoItemCollection)->Unit)? = null
 
     private var handleliste: MutableList<TodoItem> = mutableListOf(
             TodoItem("Egg", false),
@@ -58,19 +64,20 @@ class TodoListDepositoryManager {
             TodoList("Bucket List", bucketlist)
         )
         onTodoList?.invoke(todoListCollection)
-        SaveJson.instance.saveToFile(todoListCollection)
+        FirebaseManager.instance.saveToFile(todoListCollection)
+        //loadJson()
     }
 
     fun updateTodoList(todoList:TodoList){
         // finn huskeliste i listen og erstatt med den ny listen
         onTodoListUpdate?.invoke(todoList)
-        SaveJson.instance.saveToFile(todoListCollection)
+        FirebaseManager.instance.saveToFile(todoListCollection)
     }
 
     fun deleteTodoList(todoList:TodoList){
         todoListCollection.remove(todoList)
         onTodoList?.invoke(todoListCollection)
-        SaveJson.instance.saveToFile(todoListCollection)
+        FirebaseManager.instance.saveToFile(todoListCollection)
     }
 
     fun deleteTodoItem(todoList: MutableList<TodoItem>, todoItem:TodoItem) {
@@ -84,7 +91,7 @@ class TodoListDepositoryManager {
                 index++
             }
             todoList.remove(todoItem)
-            SaveJson.instance.saveToFile(todoListCollection)
+            FirebaseManager.instance.saveToFile(todoListCollection)
         }
     }
 
@@ -98,7 +105,7 @@ class TodoListDepositoryManager {
         todoListCollection.add(todoList)
         onTodoList?.invoke(todoListCollection)
         this.todoListCollection = todoListCollection
-        SaveJson.instance.saveToFile(todoListCollection)
+        FirebaseManager.instance.saveToFile(todoListCollection)
     }
 
     fun addTodoItem(todoList: TodoList, todoItem:TodoItem){
@@ -109,7 +116,7 @@ class TodoListDepositoryManager {
         }
         todoList.listItems.add(todoItem)
         onTodoList?.invoke(todoListCollection)
-        SaveJson.instance.saveToFile(todoListCollection)
+        FirebaseManager.instance.saveToFile(todoListCollection)
     }
 
     fun updateTodoItem(todoListName: String, todoItem: TodoItem, value: Boolean){
@@ -124,12 +131,7 @@ class TodoListDepositoryManager {
 
         }
         onTodoList?.invoke(todoListCollection)
-        SaveJson.instance.saveToFile(todoListCollection)
-    }
-
-    // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
-    companion object {
-        val instance = TodoListDepositoryManager()
+        FirebaseManager.instance.saveToFile(todoListCollection)
     }
 
     fun getJson():String {
@@ -159,5 +161,36 @@ class TodoListDepositoryManager {
         jsonString += "\n}"             // ends todoListCollection
 
         return jsonString
+    }
+
+    fun loadJson() {
+        val context = App.context
+
+        if(context != null) {
+            //val filenames = mutableListOf<String>("handleliste.json")
+
+            val url = context.getString(R.string.handleliste)
+            val queue = Volley.newRequestQueue(context)
+
+            val request = StringRequest(com.android.volley.Request.Method.GET, url, {
+                val gson = Gson()
+                val typeDef = object: TypeToken<MutableList<TodoItem>>() { }.type
+                val itemsFromWeb = gson.fromJson<MutableList<TodoItem>>(it.toString(), typeDef)
+                // todo: listFromWeb trenger å motta list items
+                todoItemCollection = TodoItemCollection("handleliste", itemsFromWeb) // sjekk mer i my books
+
+                onTodoItems?.invoke(todoItemCollection)
+            },  {
+                Log.e("BookDepositoryManager", it.toString())
+                onTodoItems?.invoke(todoItemCollection)
+            })
+            queue.add(request)
+
+        }
+    }
+
+    // Bruker singleton patter, for vi trenger kun en TodoListDepositoryManager
+    companion object {
+        val instance = TodoListDepositoryManager()
     }
 }
