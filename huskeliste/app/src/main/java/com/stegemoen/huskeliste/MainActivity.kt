@@ -1,7 +1,6 @@
 package com.stegemoen.huskeliste
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +14,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.stegemoen.huskeliste.databinding.ActivityMainBinding
-import com.stegemoen.huskeliste.firebase.SaveJson
+import com.stegemoen.huskeliste.firebase.FirebaseManager
 import com.stegemoen.huskeliste.todolists.TodoListDepositoryManager
 import com.stegemoen.huskeliste.todolists.TodoListDetailsActivity
 import com.stegemoen.huskeliste.todolists.data.TodoList
 import com.stegemoen.huskeliste.todolists.TodoListRecyclerAdapter
 import com.stegemoen.huskeliste.todolists.data.TodoItem
-import org.json.JSONObject
 import java.io.File
 
 const val EXTRA_TODOLIST_INFO: String = "com.stegemoen.huskeliste.todolists.info"
@@ -38,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = Firebase.auth
         signInAnonymously()
-        SaveJson.Companion.init(this)
+        FirebaseManager.Companion.init(this)
 
         binding.todoListing.layoutManager = LinearLayoutManager(this)
         // Legger til parameter for onListClicked funksjonen
